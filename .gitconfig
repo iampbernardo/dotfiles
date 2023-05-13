@@ -1,0 +1,13 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Pablo Bernardo
+	email = iam@pbenardo.com
+[core]
+	editor = nvim 
+[browser]
+	arc
+[push]
+	default = current
+[github]
+	user = iampbernardo
+
