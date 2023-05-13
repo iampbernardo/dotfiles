@@ -1,3 +1,6 @@
 # Alias for Neovim
 alias vim="nvim"
 
+# Edit my configuration
+alias nconf="nvim ~/.config/nvim/"
+
