@@ -4,3 +4,8 @@ alias vim="nvim"
 # Edit my configuration
 alias nconf="nvim ~/.config/nvim/"
 
+# work on my notes
+alias mynotes="cd ~/repositories/nsecondbrain/ && nvim ,"
+
+# alias to update my JD Index file
+alias updatejd="cd ~/repositories/johnny-decimal-index/ && nvim README.md && cd"

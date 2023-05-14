@@ -111,3 +111,12 @@ if [ -f "$ZSH_ALIASES_CUSTOM" ]; then
   source "$ZSH_ALIASES_CUSTOM" 
 fi
 
+
+# Johnny Decimal shortcut
+cdj() {
+  # Update with your document root folder
+  pushd ~/Documents/*/*/${1}*
+}
+ 
+export cdj
+
