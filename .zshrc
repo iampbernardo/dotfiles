@@ -120,3 +120,6 @@ cdj() {
  
 export cdj
 
+# Adding DoomEmacs to your path
+export PATH="/Applications/MacPorts/Emacs.app/Contents/MacOS:$PATH"
+export PATH="~/.config/emacs/bin:$PATH"
