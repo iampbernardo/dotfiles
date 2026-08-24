@@ -3,3 +3,5 @@
 ^/README\.md$
 ^/Brewfile$
 ^/install\.sh$
+^/macos-defaults\.sh$
+^/scripts$

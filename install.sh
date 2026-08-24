@@ -38,4 +38,14 @@ echo "==> Enlazando dotfiles (stow)"
 cd "$DOTFILES_DIR"
 stow .
 
+echo "==> Ajustes de macOS (Dock, Finder, teclado, capturas)"
+"$DOTFILES_DIR/macos-defaults.sh"
+
+echo "==> Servicios de barra/ventanas"
+brew services start sketchybar
+brew services start felixkratz/formulae/borders
+open -a AeroSpace
+open -a Ice
+
 echo "==> Listo. Abre Ghostty (o una terminal nueva) para verlo."
+echo "    AeroSpace e Ice te van a pedir permiso de Accesibilidad la primera vez — acéptalo."

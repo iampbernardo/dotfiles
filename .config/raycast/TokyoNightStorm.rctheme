@@ -1,0 +1,21 @@
+{
+  "appearance": "dark",
+  "name": "Tokyo Night Storm",
+  "version": "1",
+  "author": "Flight505",
+  "authorUsername": "Flight505",
+  "colors": {
+    "background": "#24283b",
+    "backgroundSecondary": "#0C0E14",
+    "text": "#c0caf5",
+    "selection": "#7AA2F7",
+    "loader": "#7aa2f7",
+    "red": "#f7768e",
+    "orange": "#ff9e64",
+    "yellow": "#e0af68",
+    "green": "#9ece6a",
+    "blue": "#7aa2f7",
+    "purple": "#9d7cd8",
+    "magenta": "#bb9af7"
+  }
+}

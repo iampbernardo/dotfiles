@@ -1,15 +1,26 @@
 # dotfiles
 
-Mi setup de terminal: Ghostty + Starship (tema Tokyo Night Storm) + zsh, gestionado con [GNU Stow](https://www.gnu.org/software/stow/manual/stow.html).
+Mi setup de Mac: Ghostty + Starship + zsh en terminal, AeroSpace + sketchybar
++ Ice a nivel sistema — todo en **Tokyo Night Storm** — gestionado con
+[GNU Stow](https://www.gnu.org/software/stow/manual/stow.html).
 
 ## Qué incluye
 
 | Archivo | Qué hace |
 |---|---|
-| [`.zshrc`](.zshrc) | oh-my-zsh, plugins (autosuggestions, syntax-highlighting, completions), alias/funciones (`eza`, `bat`, `zoxide`, `fzf`), helpers `dot`/`dotsync`/`dotpush`/`dothelp` |
+| [`.zshrc`](.zshrc) | oh-my-zsh, plugins (autosuggestions, syntax-highlighting, completions), alias/funciones (`eza`, `bat`, `zoxide`, `fzf`, `lg`=lazygit, `top`=btop), banner `fastfetch`, helpers `dot`/`dotsync`/`dotpush`/`dotbrew`/`dothelp` |
 | [`.gitconfig`](.gitconfig) | credenciales vía `gh`, diffs con `delta` |
-| [`.config/ghostty/config`](.config/ghostty/config) | tema Tokyo Night Storm, fuente JetBrainsMono Nerd Font |
+| [`.config/ghostty/config`](.config/ghostty/config) | terminal — tema Tokyo Night Storm, fuente JetBrainsMono Nerd Font |
 | [`.config/starship.toml`](.config/starship.toml) | prompt, mismos colores que Ghostty |
+| [`.config/btop/`](.config/btop) | monitor de sistema (`top`), tema custom |
+| [`.config/lazygit/config.yml`](.config/lazygit/config.yml) | TUI de git (`lg`) |
+| [`.config/fastfetch/config.jsonc`](.config/fastfetch/config.jsonc) | banner de sistema al abrir terminal |
+| [`.config/aerospace/aerospace.toml`](.config/aerospace/aerospace.toml) | tiling window manager — `alt+hjkl` mover foco, `alt+shift+hjkl` mover ventana, `alt+1-5` workspaces |
+| [`.config/sketchybar/`](.config/sketchybar) | barra de menú custom (workspaces, app activa, reloj, batería) |
+| [`.config/borders/bordersrc`](.config/borders/bordersrc) | borde de color en la ventana activa |
+| [`.config/raycast/TokyoNightStorm.rctheme`](.config/raycast/TokyoNightStorm.rctheme) | tema de Raycast (import manual desde Preferences → Appearance) |
+| [`macos-defaults.sh`](macos-defaults.sh) | Dock, Finder, teclado, capturas — vía `defaults write` |
+| [`scripts/gen_wallpaper.py`](scripts/gen_wallpaper.py) | genera el wallpaper degradado Tokyo Night (sin dependencias) |
 | [`Brewfile`](Brewfile) | todo lo que hay que instalar vía Homebrew |
 | [`install.sh`](install.sh) | bootstrap completo para una Mac nueva |
 
@@ -21,9 +32,17 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-Esto instala Homebrew (si falta), todo el `Brewfile` (Ghostty, la fuente, starship, eza, bat, fzf, zoxide, delta...), `uv`, oh-my-zsh y sus plugins, y al final corre `stow .` para crear los symlinks.
+Esto instala Homebrew (si falta), todo el `Brewfile` (Ghostty, AeroSpace,
+sketchybar, la fuente, starship, eza, bat, fzf, zoxide, delta...), `uv`,
+oh-my-zsh y sus plugins, enlaza todo con `stow .`, aplica `macos-defaults.sh`,
+y arranca sketchybar/borders/AeroSpace/Ice al final.
 
 Si algún archivo ya existe en `$HOME` (p. ej. un `.zshrc` por defecto), Stow avisa del conflicto — hay que moverlo o borrarlo antes de correr `stow .` de nuevo.
+
+**Después de correrlo, manual:**
+- AeroSpace e Ice piden permiso de Accesibilidad la primera vez — hay que aceptarlo en el diálogo del sistema.
+- El tema de Raycast no se aplica solo: `open -a Raycast ~/.config/raycast/TokyoNightStorm.rctheme` y confirmar el import desde la UI de Raycast.
+- El wallpaper no lo pone `install.sh` — `python3 scripts/gen_wallpaper.py` y luego aplicarlo desde Preferencias del Sistema (o `osascript`).
 
 ## Uso diario
 
