@@ -6,11 +6,8 @@ FG="0xffc0caf5"
 BLUE="0xff7aa2f7"
 PURPLE="0xffbb9af7"
 GREEN="0xff9ece6a"
-MUTED="0xff565f89"
 
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
-
-sketchybar --add event aerospace_workspace_change
 
 sketchybar --bar \
   height=32 \
@@ -30,24 +27,6 @@ sketchybar --default \
   padding_right=4 \
   background.height=26 \
   background.corner_radius=6
-
-# --- Workspaces (AeroSpace) -------------------------------------------
-for sid in 1 2 3 4 5; do
-  sketchybar --add item space.$sid left \
-    --set space.$sid \
-      label="$sid" \
-      click_script="aerospace workspace $sid" \
-      script="$PLUGIN_DIR/space.sh $sid" \
-    --subscribe space.$sid aerospace_workspace_change
-done
-
-sketchybar --add item separator left \
-  --set separator \
-    icon= \
-    icon.color=$MUTED \
-    label.drawing=off \
-    padding_left=6 \
-    padding_right=6
 
 # --- App activa ---------------------------------------------------------
 sketchybar --add item front_app left \

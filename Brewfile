@@ -31,7 +31,6 @@ brew "gh"
 brew "node"
 
 # --- Sistema / look del Mac ----------------------------------------------
-cask "nikitabobko/tap/aerospace"   # tiling window manager
 brew "sketchybar"                  # barra de menú custom
 brew "felixkratz/formulae/borders" # bordes de ventana activa
 cask "font-sketchybar-app-font"

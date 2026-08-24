@@ -41,10 +41,8 @@ stow .
 echo "==> Ajustes de macOS (Dock, Finder, teclado, capturas)"
 "$DOTFILES_DIR/macos-defaults.sh"
 
-echo "==> Servicios de barra/ventanas"
+echo "==> Servicios de barra"
 brew services start sketchybar
 brew services start felixkratz/formulae/borders
-open -a AeroSpace
 
 echo "==> Listo. Abre Ghostty (o una terminal nueva) para verlo."
-echo "    AeroSpace te va a pedir permiso de Accesibilidad la primera vez — acéptalo."
