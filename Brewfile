@@ -2,8 +2,6 @@
 #   brew bundle
 # (install.sh ya lo llama por ti)
 
-tap "wpscanteam/tap"
-
 # --- Terminal --------------------------------------------------------------
 cask "ghostty"
 cask "font-jetbrains-mono-nerd-font"
@@ -28,4 +26,3 @@ brew "node"
 # --- Otros -----------------------------------------------------------------
 brew "telnet"
 brew "yt-dlp"
-brew "wpscan"
