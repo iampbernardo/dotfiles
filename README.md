@@ -1,7 +1,7 @@
 # dotfiles
 
 Mi setup de Mac: Ghostty + Starship + zsh en terminal, AeroSpace + sketchybar
-+ Ice a nivel sistema — todo en **Tokyo Night Storm** — gestionado con
+a nivel sistema — todo en **Tokyo Night Storm** — gestionado con
 [GNU Stow](https://www.gnu.org/software/stow/manual/stow.html).
 
 ## Qué incluye
@@ -35,12 +35,12 @@ cd ~/dotfiles
 Esto instala Homebrew (si falta), todo el `Brewfile` (Ghostty, AeroSpace,
 sketchybar, la fuente, starship, eza, bat, fzf, zoxide, delta...), `uv`,
 oh-my-zsh y sus plugins, enlaza todo con `stow .`, aplica `macos-defaults.sh`,
-y arranca sketchybar/borders/AeroSpace/Ice al final.
+y arranca sketchybar/borders/AeroSpace al final.
 
 Si algún archivo ya existe en `$HOME` (p. ej. un `.zshrc` por defecto), Stow avisa del conflicto — hay que moverlo o borrarlo antes de correr `stow .` de nuevo.
 
 **Después de correrlo, manual:**
-- AeroSpace e Ice piden permiso de Accesibilidad la primera vez — hay que aceptarlo en el diálogo del sistema.
+- AeroSpace pide permiso de Accesibilidad la primera vez — hay que aceptarlo en el diálogo del sistema.
 - El tema de Raycast no se aplica solo: `open -a Raycast ~/.config/raycast/TokyoNightStorm.rctheme` y confirmar el import desde la UI de Raycast.
 - El wallpaper no lo pone `install.sh` — `python3 scripts/gen_wallpaper.py` y luego aplicarlo desde Preferencias del Sistema (o `osascript`).
 

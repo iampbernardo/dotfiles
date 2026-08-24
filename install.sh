@@ -45,7 +45,6 @@ echo "==> Servicios de barra/ventanas"
 brew services start sketchybar
 brew services start felixkratz/formulae/borders
 open -a AeroSpace
-open -a Ice
 
 echo "==> Listo. Abre Ghostty (o una terminal nueva) para verlo."
-echo "    AeroSpace e Ice te van a pedir permiso de Accesibilidad la primera vez — acéptalo."
+echo "    AeroSpace te va a pedir permiso de Accesibilidad la primera vez — acéptalo."
