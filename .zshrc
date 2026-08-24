@@ -39,3 +39,34 @@ eval "$(zoxide init zsh)"
 
 # Starship prompt
 eval "$(starship init zsh)"
+
+# --- Dotfiles (GNU Stow) -------------------------------------------------
+
+alias dot='cd ~/dotfiles'
+
+# Re-link everything and show what changed (safe to run anytime)
+dotsync() {
+  (cd ~/dotfiles && stow . && git status --short)
+}
+
+# Re-link, commit and push in one go. Usage: dotpush "mensaje del commit"
+dotpush() {
+  local msg="${1:-update dotfiles}"
+  (cd ~/dotfiles && stow . && git add -A && git commit -m "$msg" && git push)
+}
+
+dothelp() {
+  cat <<'EOF'
+Gestión de ~/dotfiles (GNU Stow)
+
+  dot              cd a ~/dotfiles
+  dotsync          re-enlaza (stow .) y muestra qué cambió, sin commitear
+  dotpush "msg"    re-enlaza + commit + push (mensaje opcional)
+  dothelp          este mensaje
+
+Para añadir un dotfile nuevo:
+  1. mueve el archivo real a ~/dotfiles manteniendo su ruta relativa a $HOME
+     (p.ej. ~/.config/tmux/tmux.conf -> ~/dotfiles/.config/tmux/tmux.conf)
+  2. dotsync    (crea el symlink de vuelta a $HOME)
+EOF
+}
