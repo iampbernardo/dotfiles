@@ -31,9 +31,7 @@ brew "gh"
 brew "node"
 
 # --- Sistema / look del Mac ----------------------------------------------
-brew "sketchybar"                  # barra de menú custom
 brew "felixkratz/formulae/borders" # bordes de ventana activa
-cask "font-sketchybar-app-font"
 
 # --- Otros -----------------------------------------------------------------
 brew "telnet"
