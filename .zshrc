@@ -62,6 +62,7 @@ Gestión de ~/dotfiles (GNU Stow)
   dot              cd a ~/dotfiles
   dotsync          re-enlaza (stow .) y muestra qué cambió, sin commitear
   dotpush "msg"    re-enlaza + commit + push (mensaje opcional)
+  dotbrew          regenera la sección "brew" del Brewfile
   dothelp          este mensaje
 
 Para añadir un dotfile nuevo:
@@ -69,4 +70,24 @@ Para añadir un dotfile nuevo:
      (p.ej. ~/.config/tmux/tmux.conf -> ~/dotfiles/.config/tmux/tmux.conf)
   2. dotsync    (crea el symlink de vuelta a $HOME)
 EOF
+}
+
+# Regenera las líneas `brew "..."` del Brewfile con lo que instalaste
+# explícitamente (brew list --installed-on-request). Conserva tal cual
+# los `tap`/`cask` existentes, que son curados a mano.
+dotbrew() {
+  local file="$HOME/dotfiles/Brewfile"
+  local tmp
+  tmp="$(mktemp)"
+
+  {
+    grep -E '^(tap|cask) ' "$file"
+    echo ""
+    echo "# --- brews (regenerado por dotbrew el $(date +%Y-%m-%d)) ---"
+    brew list --installed-on-request --formula | sort | sed 's/^/brew "/;s/$/"/'
+  } > "$tmp"
+
+  mv "$tmp" "$file"
+  echo "Brewfile regenerado. Revisa el diff antes de subir:"
+  (cd ~/dotfiles && git diff Brewfile)
 }
