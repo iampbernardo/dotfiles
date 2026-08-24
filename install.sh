@@ -41,7 +41,4 @@ stow .
 echo "==> Ajustes de macOS (Dock, Finder, teclado, capturas)"
 "$DOTFILES_DIR/macos-defaults.sh"
 
-echo "==> Servicio de bordes"
-brew services start felixkratz/formulae/borders
-
 echo "==> Listo. Abre Ghostty (o una terminal nueva) para verlo."

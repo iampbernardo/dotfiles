@@ -2,8 +2,6 @@
 #   brew bundle
 # (install.sh ya lo llama por ti)
 
-tap "felixkratz/formulae"
-
 # --- Terminal --------------------------------------------------------------
 cask "ghostty"
 cask "font-jetbrains-mono-nerd-font"
@@ -29,9 +27,6 @@ brew "lazygit"      # alias lg
 brew "git"
 brew "gh"
 brew "node"
-
-# --- Sistema / look del Mac ----------------------------------------------
-brew "felixkratz/formulae/borders" # bordes de ventana activa
 
 # --- Otros -----------------------------------------------------------------
 brew "telnet"

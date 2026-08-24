@@ -1,8 +1,7 @@
 # dotfiles
 
-Mi setup de Mac: Ghostty + Starship + zsh en terminal, `borders` a nivel
-sistema — todo en **Tokyo Night Storm** — gestionado con
-[GNU Stow](https://www.gnu.org/software/stow/manual/stow.html).
+Mi setup de terminal: Ghostty + Starship + zsh, tema **Tokyo Night Storm**,
+gestionado con [GNU Stow](https://www.gnu.org/software/stow/manual/stow.html).
 
 ## Qué incluye
 
@@ -15,7 +14,6 @@ sistema — todo en **Tokyo Night Storm** — gestionado con
 | [`.config/btop/`](.config/btop) | monitor de sistema (`top`), tema custom |
 | [`.config/lazygit/config.yml`](.config/lazygit/config.yml) | TUI de git (`lg`) |
 | [`.config/fastfetch/config.jsonc`](.config/fastfetch/config.jsonc) | banner de sistema al abrir terminal |
-| [`.config/borders/bordersrc`](.config/borders/bordersrc) | borde de color en la ventana activa |
 | [`.config/raycast/TokyoNightStorm.rctheme`](.config/raycast/TokyoNightStorm.rctheme) | tema de Raycast (import manual desde Preferences → Appearance) |
 | [`macos-defaults.sh`](macos-defaults.sh) | Dock, Finder, teclado, capturas — vía `defaults write` |
 | [`scripts/gen_wallpaper.py`](scripts/gen_wallpaper.py) | genera el wallpaper degradado Tokyo Night (sin dependencias) |
@@ -32,8 +30,7 @@ cd ~/dotfiles
 
 Esto instala Homebrew (si falta), todo el `Brewfile` (Ghostty, la fuente,
 starship, eza, bat, fzf, zoxide, delta...), `uv`, oh-my-zsh y sus plugins,
-enlaza todo con `stow .`, aplica `macos-defaults.sh`, y arranca `borders`
-al final.
+enlaza todo con `stow .`, y aplica `macos-defaults.sh` al final.
 
 Si algún archivo ya existe en `$HOME` (p. ej. un `.zshrc` por defecto), Stow avisa del conflicto — hay que moverlo o borrarlo antes de correr `stow .` de nuevo.
 
