@@ -1,0 +1,32 @@
+# Theme
+theme = TokyoNight Storm
+
+# Font
+font-family = "JetBrainsMono Nerd Font"
+font-size = 14
+adjust-cell-height = 15%
+
+# Window
+window-padding-x = 14
+window-padding-y = 10
+window-decoration = true
+macos-titlebar-style = tabs
+background-opacity = 0.94
+background-blur = 20
+unfocused-split-opacity = 0.7
+
+# Cursor
+cursor-style = block
+cursor-style-blink = true
+
+# Behavior
+copy-on-select = true
+confirm-close-surface = false
+shell-integration-features = no-cursor
+
+# Scrollback
+scrollback-limit = 10000000
+
+# macOS
+macos-option-as-alt = true
+quick-terminal-position = top
