@@ -37,8 +37,19 @@ source <(fzf --zsh)
 # zoxide (smarter cd) — use `z` to jump to frecent directories
 eval "$(zoxide init zsh)"
 
+# lazygit (git TUI)
+alias lg='lazygit'
+
+# btop (system monitor)
+alias top='btop'
+
 # Starship prompt
 eval "$(starship init zsh)"
+
+# fastfetch — banner de sistema al abrir una terminal nueva
+if [[ -o interactive ]] && command -v fastfetch &>/dev/null; then
+  fastfetch
+fi
 
 # --- Dotfiles (GNU Stow) -------------------------------------------------
 

@@ -17,6 +17,11 @@ brew "fzf"          # Ctrl+R / Ctrl+T
 brew "zoxide"       # cd
 brew "git-delta"    # git diff
 brew "ripgrep"      # grep
+brew "btop"         # top
+
+# --- TUIs bonitas -----------------------------------------------------
+brew "fastfetch"    # banner al abrir terminal
+brew "lazygit"      # alias lg
 
 # --- Dev tooling ---------------------------------------------------------
 brew "git"
