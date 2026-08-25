@@ -135,8 +135,13 @@ ai-status() {
 
 ai-restart() { ai-down; sleep 1; ai-up; }
 
-# Local models (Qwen Code and Aider were removed as agent CLIs; the
-# Ollama models/Modelfiles stay — run them directly, e.g.:
-#   ai-up && ollama run qwen2.5-coder:3b-agent
-#   ai-up && ollama run qwen3:4b-agent
-#   ai-up && ollama run qwen3:8b-agent
+# Local model shortcuts (Qwen Code and Aider were removed; these just
+# start Ollama and drop you into `ollama run` directly).
+# "-base" = stock pulled checkpoint. Plain name = the tuned "-agent"
+# Modelfile variant (40960 ctx, sampling tweaks — see ollama/Modelfile.*).
+alias qwen-coder='ai-up >/dev/null; ollama run qwen2.5-coder:3b-agent'      # coder line, lightest (~2GB)
+alias qwen-coder-base='ai-up >/dev/null; ollama run qwen2.5-coder:3b-instruct'
+alias qwen-fast='ai-up >/dev/null; ollama run qwen3:4b-agent'              # general Qwen3, ~2.5GB
+alias qwen-fast-base='ai-up >/dev/null; ollama run qwen3:4b-instruct'
+alias qwen-quality='ai-up >/dev/null; ollama run qwen3:8b-agent'           # general Qwen3, ~5.2GB
+alias qwen-quality-base='ai-up >/dev/null; ollama run qwen3:8b'
