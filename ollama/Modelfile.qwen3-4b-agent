@@ -12,9 +12,13 @@ FROM qwen3:4b-instruct
 # before any conversation/file content is added. Too-small context makes
 # llama.cpp's --context-shift silently drop the original instruction
 # mid-turn, which is what caused runaway/rambling generations during
-# testing. 32768 fits that plus headroom; 65536 pushed resident memory to
-# 12GB and spilled off-GPU on this 16GB machine, so stayed conservative.
-PARAMETER num_ctx 32768
+# testing. The real prompt size isn't fixed — it varied 28.4k/29.8k/33.4k
+# tokens across test runs (interactive mode reads extra context files like
+# ~/.qwen/output-language.md on top of the base tool schema) — so 32768 was
+# too tight and got hit live. 40960 gives real headroom above the observed
+# ~33.4k peak; 65536 pushed resident memory to 12GB and spilled off-GPU on
+# this 16GB machine, so avoid going that high.
+PARAMETER num_ctx 40960
 # Hard ceiling per turn so a bad generation stops in seconds, not minutes.
 PARAMETER num_predict 800
 # Base model ships with repeat_penalty 1 (disabled), which makes

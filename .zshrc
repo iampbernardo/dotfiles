@@ -140,10 +140,11 @@ ai-status() {
 ai-restart() { ai-down; sleep 1; ai-up; }
 
 # Qwen Code model switches
-# qwen3:4b-agent  -> local, fast, ~3GB RAM, default. Non-thinking (instruct)
-#                    checkpoint tuned for agent use — safe default for
-#                    sensitive code.
-# qwen3:8b-agent  -> local, higher quality, ~5-6GB RAM. Hybrid thinking model
+# qwen3:4b-agent  -> local, fast, ~9GB RAM (40960 ctx to fit Qwen Code's
+#                    large tool-schema prompt), default. Non-thinking
+#                    (instruct) checkpoint tuned for agent use — safe
+#                    default for sensitive code.
+# qwen3:8b-agent  -> local, higher quality, heavier RAM. Hybrid thinking model
 #                    (no non-thinking 8b tag exists), so it's slower and can
 #                    still ramble on some prompts. Close heavy apps first.
 # qwen-coder-plus -> cloud (Alibaba Dashscope) — non-sensitive projects only.
