@@ -52,6 +52,12 @@ if command -v ollama &>/dev/null; then
   kill "$OLLAMA_INSTALL_PID"
 fi
 
+echo "==> mlx-lm para Ornith 1.5 9B (ver .zshrc: om-up/om-down/om-status, alias oc-ornith/ornith)"
+if [[ "$(uname -m)" == "arm64" ]]; then
+  uv tool install mlx-lm --quiet
+  # Los pesos (~5GB) se descargan solos en el primer om-up/ornith, no aquí.
+fi
+
 echo "==> Ajustes de macOS (Dock, Finder, teclado, capturas)"
 "$DOTFILES_DIR/macos-defaults.sh"
 

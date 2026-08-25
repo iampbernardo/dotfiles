@@ -152,3 +152,50 @@ alias qwen-quality-base='ai-up >/dev/null; ollama run qwen3:8b'
 alias oc-coder='ai-up >/dev/null; opencode -m ollama/qwen2.5-coder:3b-agent'
 alias oc-fast='ai-up >/dev/null; opencode -m ollama/qwen3:4b-agent'
 alias oc-quality='ai-up >/dev/null; opencode -m ollama/qwen3:8b-agent'
+
+# --- Local AI (MLX / Ornith) ----------------------------------------------
+
+# A/B candidate for qwen3:8b-agent's "quality" slot — separate port and
+# backend (Apple's MLX instead of Ollama/llama.cpp) so it doesn't disturb
+# anything above until it's proven out the same way Qwen3 was.
+om-up() {
+  if curl -s -o /dev/null http://127.0.0.1:8080/v1/models; then
+    echo "MLX server already running."
+    return 0
+  fi
+  mlx_lm.server \
+    --model ornith-ai/Ornith-1.5-9B-MLX-4bit \
+    --host 127.0.0.1 \
+    --port 8080 \
+    --prefill-step-size 1024 \
+    > /tmp/mlx-server.log 2>&1 &
+  disown
+  # First run also downloads the ~5GB weights, so give it more room than
+  # ai-up's Ollama wait before giving up.
+  for i in $(seq 1 60); do
+    curl -s -o /dev/null http://127.0.0.1:8080/v1/models && { echo "MLX server up."; return 0; }
+    sleep 1
+  done
+  echo "MLX server didn't come up — check /tmp/mlx-server.log"
+}
+
+om-down() {
+  pkill -f "mlx_lm.server" && echo "MLX server stopped." || echo "MLX server wasn't running."
+}
+
+om-status() {
+  if curl -s -o /dev/null http://127.0.0.1:8080/v1/models; then
+    echo "MLX server: running (port 8080)"
+  else
+    echo "MLX server: not running"
+  fi
+}
+
+om-restart() { om-down; sleep 1; om-up; }
+
+# Direct chat, no server — for quick A/B testing against qwen-quality.
+alias ornith='mlx_lm.chat --model ornith-ai/Ornith-1.5-9B-MLX-4bit'
+
+# opencode via the MLX server. Config: .config/opencode/opencode.json
+# registers this model under the "mlx" provider.
+alias oc-ornith='om-up >/dev/null; opencode -m mlx/ornith-ai/Ornith-1.5-9B-MLX-4bit'

@@ -15,6 +15,16 @@
         "qwen3:8b-agent": { "name": "Qwen3 8B (agent)" },
         "qwen3:8b": { "name": "Qwen3 8B (base)" }
       }
+    },
+    "mlx": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "MLX (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:8080/v1"
+      },
+      "models": {
+        "ornith-ai/Ornith-1.5-9B-MLX-4bit": { "name": "Ornith 1.5 9B (MLX 4-bit)" }
+      }
     }
   }
 }
