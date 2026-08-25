@@ -102,3 +102,59 @@ dotbrew() {
   echo "Brewfile regenerado. Revisa el diff antes de subir:"
   (cd ~/dotfiles && git diff Brewfile)
 }
+
+# Qwen Code PATH block begin
+export PATH='/Users/pbernardo/.local/bin':$PATH
+# Qwen Code PATH block end
+
+# --- Local AI (Ollama / Qwen Code) --------------------------------------
+
+# Start Ollama on demand (not a login service — keeps idle RAM free)
+ai-up() {
+  if curl -s -o /dev/null http://localhost:11434/api/version; then
+    echo "Ollama already running."
+    return 0
+  fi
+  ollama serve > /tmp/ollama-serve.log 2>&1 &
+  disown
+  for i in $(seq 1 20); do
+    curl -s -o /dev/null http://localhost:11434/api/version && { echo "Ollama up."; return 0; }
+    sleep 0.5
+  done
+  echo "Ollama didn't come up — check /tmp/ollama-serve.log"
+}
+
+ai-down() {
+  pkill -f "ollama serve" && echo "Ollama stopped." || echo "Ollama wasn't running."
+}
+
+ai-status() {
+  if curl -s -o /dev/null http://localhost:11434/api/version; then
+    echo "Ollama: running"
+    ollama ps
+  else
+    echo "Ollama: not running"
+  fi
+}
+
+ai-restart() { ai-down; sleep 1; ai-up; }
+
+# Qwen Code model switches
+# qwen3:4b-agent  -> local, fast, ~3GB RAM, default. Non-thinking (instruct)
+#                    checkpoint tuned for agent use — safe default for
+#                    sensitive code.
+# qwen3:8b-agent  -> local, higher quality, ~5-6GB RAM. Hybrid thinking model
+#                    (no non-thinking 8b tag exists), so it's slower and can
+#                    still ramble on some prompts. Close heavy apps first.
+# qwen-coder-plus -> cloud (Alibaba Dashscope) — non-sensitive projects only.
+#                    Needs DASHSCOPE_API_KEY (the old free Qwen OAuth tier
+#                    was discontinued 2026-04-15).
+alias qwen-fast='ai-up >/dev/null; qwen --model qwen3:4b-agent'
+alias qwen-quality='ai-up >/dev/null; qwen --model qwen3:8b-agent'
+qwen-cloud() {
+  if [[ -z "$DASHSCOPE_API_KEY" ]]; then
+    echo "Set DASHSCOPE_API_KEY first, e.g.: export DASHSCOPE_API_KEY=sk-..."
+    return 1
+  fi
+  qwen --model qwen3-coder-plus
+}

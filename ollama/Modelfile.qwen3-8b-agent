@@ -1,0 +1,9 @@
+FROM qwen3:8b
+
+# See Modelfile.qwen3-4b-agent for rationale. Heavier model (~5-6GB
+# resident) — use only when other memory-hungry apps are closed.
+PARAMETER num_ctx 16384
+PARAMETER num_predict 800
+PARAMETER repeat_penalty 1.1
+PARAMETER top_k 20
+PARAMETER top_p 0.95

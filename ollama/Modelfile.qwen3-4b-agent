@@ -1,0 +1,24 @@
+FROM qwen3:4b-instruct
+
+# Tuned for coding-agent use (Qwen Code / large tool+file context per turn).
+#
+# Built on the "instruct" (non-thinking) tag rather than the default hybrid
+# qwen3:4b: testing showed the hybrid model ignores the API's think:false
+# flag and rambles through open-ended reasoning text regardless, so a real
+# non-thinking checkpoint is the fix, not a request-time toggle.
+#
+# num_ctx: default 4096 is far too small for agent prompts — Qwen Code's own
+# system prompt + tool schemas alone measured at 28,422 tokens in testing,
+# before any conversation/file content is added. Too-small context makes
+# llama.cpp's --context-shift silently drop the original instruction
+# mid-turn, which is what caused runaway/rambling generations during
+# testing. 32768 fits that plus headroom; 65536 pushed resident memory to
+# 12GB and spilled off-GPU on this 16GB machine, so stayed conservative.
+PARAMETER num_ctx 32768
+# Hard ceiling per turn so a bad generation stops in seconds, not minutes.
+PARAMETER num_predict 800
+# Base model ships with repeat_penalty 1 (disabled), which makes
+# degenerate/looping output more likely.
+PARAMETER repeat_penalty 1.1
+PARAMETER top_k 20
+PARAMETER top_p 0.95
