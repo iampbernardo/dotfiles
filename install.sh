@@ -38,12 +38,7 @@ echo "==> Enlazando dotfiles (stow)"
 cd "$DOTFILES_DIR"
 stow .
 
-echo "==> Qwen Code CLI"
-if ! command -v qwen &>/dev/null; then
-  bash -c "$(curl -fsSL https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh)"
-fi
-
-echo "==> Modelos locales de Ollama (ver ollama/, .zshrc: ai-up/qwen-coder/qwen-fast/qwen-quality/aider-fast)"
+echo "==> Modelos locales de Ollama (ver ollama/, .zshrc: ai-up/ai-down/ai-status)"
 if command -v ollama &>/dev/null; then
   ollama serve >/tmp/ollama-install.log 2>&1 &
   OLLAMA_INSTALL_PID=$!

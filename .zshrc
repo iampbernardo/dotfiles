@@ -103,11 +103,7 @@ dotbrew() {
   (cd ~/dotfiles && git diff Brewfile)
 }
 
-# Qwen Code PATH block begin
-export PATH='/Users/pbernardo/.local/bin':$PATH
-# Qwen Code PATH block end
-
-# --- Local AI (Ollama / Qwen Code) --------------------------------------
+# --- Local AI (Ollama) ---------------------------------------------------
 
 # Start Ollama on demand (not a login service — keeps idle RAM free)
 ai-up() {
@@ -139,37 +135,8 @@ ai-status() {
 
 ai-restart() { ai-down; sleep 1; ai-up; }
 
-# Qwen Code model switches
-# qwen2.5-coder:3b-agent -> local, lightest, ~2GB weights (40960 ctx to fit
-#                    Qwen Code's large tool-schema prompt). Official coder
-#                    instruct checkpoint, no hybrid-thinking mode to fight.
-#                    Try this first on memory-constrained machines.
-# qwen3:4b-agent  -> local, fast, ~9GB RAM (same 40960-ctx reason), default.
-#                    Non-thinking (instruct) checkpoint tuned for agent
-#                    use — safe default for sensitive code.
-# qwen3:8b-agent  -> local, higher quality, heavier RAM. Hybrid thinking model
-#                    (no non-thinking 8b tag exists), so it's slower and can
-#                    still ramble on some prompts. Close heavy apps first.
-# qwen-coder-plus -> cloud (Alibaba Dashscope) — non-sensitive projects only.
-#                    Needs DASHSCOPE_API_KEY (the old free Qwen OAuth tier
-#                    was discontinued 2026-04-15).
-alias qwen-coder='ai-up >/dev/null; qwen --model qwen2.5-coder:3b-agent'
-alias qwen-fast='ai-up >/dev/null; qwen --model qwen3:4b-agent'
-alias qwen-quality='ai-up >/dev/null; qwen --model qwen3:8b-agent'
-qwen-cloud() {
-  if [[ -z "$DASHSCOPE_API_KEY" ]]; then
-    echo "Set DASHSCOPE_API_KEY first, e.g.: export DASHSCOPE_API_KEY=sk-..."
-    return 1
-  fi
-  qwen --model qwen3-coder-plus
-}
-
-# Aider — alternative local agent CLI. Unlike Qwen Code, it doesn't send a
-# large OpenAI-style tool-schema JSON block every turn (plain-text
-# diff/whole-file edits instead), so prefill stays cheap even on a big
-# local system prompt problem like the one Qwen Code has. Model choice is
-# far less constrained here since it doesn't depend on function-calling
-# reliability — any decent local coding model works.
-# --map-tokens 0 disables the repo-map, which otherwise adds tokens per
-# turn — skip that flag once the model/repo can afford it.
-alias aider-fast='ai-up >/dev/null; OLLAMA_API_BASE=http://127.0.0.1:11434 OLLAMA_CONTEXT_LENGTH=8192 aider --model ollama_chat/qwen2.5-coder:3b-instruct --map-tokens 0'
+# Local models (Qwen Code and Aider were removed as agent CLIs; the
+# Ollama models/Modelfiles stay — run them directly, e.g.:
+#   ai-up && ollama run qwen2.5-coder:3b-agent
+#   ai-up && ollama run qwen3:4b-agent
+#   ai-up && ollama run qwen3:8b-agent
