@@ -145,3 +145,10 @@ alias qwen-fast='ai-up >/dev/null; ollama run qwen3:4b-agent'              # gen
 alias qwen-fast-base='ai-up >/dev/null; ollama run qwen3:4b-instruct'
 alias qwen-quality='ai-up >/dev/null; ollama run qwen3:8b-agent'           # general Qwen3, ~5.2GB
 alias qwen-quality-base='ai-up >/dev/null; ollama run qwen3:8b'
+
+# opencode — agent CLI with a real TUI + tool-calling, multi-provider.
+# Config: .config/opencode/opencode.json registers the same 6 Ollama
+# models above under the "ollama" provider (no API key needed locally).
+alias oc-coder='ai-up >/dev/null; opencode -m ollama/qwen2.5-coder:3b-agent'
+alias oc-fast='ai-up >/dev/null; opencode -m ollama/qwen3:4b-agent'
+alias oc-quality='ai-up >/dev/null; opencode -m ollama/qwen3:8b-agent'

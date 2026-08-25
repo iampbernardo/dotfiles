@@ -28,8 +28,10 @@ brew "git"
 brew "gh"
 brew "node"
 
-# --- Local AI (Ollama, ver .zshrc y ollama/) -----------------------------
+# --- Local AI (Ollama / opencode, ver .zshrc, ollama/ y .config/opencode/) -
 brew "ollama"
+tap "anomalyco/tap"
+brew "anomalyco/tap/opencode"
 
 # --- Otros -----------------------------------------------------------------
 brew "telnet"
