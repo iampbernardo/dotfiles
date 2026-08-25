@@ -38,6 +38,23 @@ echo "==> Enlazando dotfiles (stow)"
 cd "$DOTFILES_DIR"
 stow .
 
+echo "==> Qwen Code CLI"
+if ! command -v qwen &>/dev/null; then
+  bash -c "$(curl -fsSL https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh)"
+fi
+
+echo "==> Modelos locales de Ollama (ver ollama/, .zshrc: ai-up/qwen-fast/qwen-quality)"
+if command -v ollama &>/dev/null; then
+  ollama serve >/tmp/ollama-install.log 2>&1 &
+  OLLAMA_INSTALL_PID=$!
+  sleep 2
+  ollama pull qwen3:4b-instruct
+  ollama pull qwen3:8b
+  ollama create qwen3:4b-agent -f "$DOTFILES_DIR/ollama/Modelfile.qwen3-4b-agent"
+  ollama create qwen3:8b-agent -f "$DOTFILES_DIR/ollama/Modelfile.qwen3-8b-agent"
+  kill "$OLLAMA_INSTALL_PID"
+fi
+
 echo "==> Ajustes de macOS (Dock, Finder, teclado, capturas)"
 "$DOTFILES_DIR/macos-defaults.sh"
 

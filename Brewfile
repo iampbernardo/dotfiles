@@ -28,6 +28,9 @@ brew "git"
 brew "gh"
 brew "node"
 
+# --- Local AI (Ollama / Qwen Code, ver .zshrc y ollama/) -----------------
+brew "ollama"
+
 # --- Otros -----------------------------------------------------------------
 brew "telnet"
 brew "yt-dlp"

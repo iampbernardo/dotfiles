@@ -1,0 +1,48 @@
+{
+  "ui": {
+    "autoModeAcknowledged": true
+  },
+  "env": {
+    "QWEN_CUSTOM_API_KEY_OPENAI_HTTP_LOCALHOST_11434_V1_76873BDAA9B6": "ollama"
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "qwen3:4b-agent",
+        "name": "qwen3:4b-agent (local, fast)",
+        "baseUrl": "http://localhost:11434/v1",
+        "envKey": "QWEN_CUSTOM_API_KEY_OPENAI_HTTP_LOCALHOST_11434_V1_76873BDAA9B6",
+        "generationConfig": {
+          "timeout": 600000,
+          "maxRetries": 1
+        }
+      },
+      {
+        "id": "qwen3:8b-agent",
+        "name": "qwen3:8b-agent (local, quality)",
+        "baseUrl": "http://localhost:11434/v1",
+        "envKey": "QWEN_CUSTOM_API_KEY_OPENAI_HTTP_LOCALHOST_11434_V1_76873BDAA9B6",
+        "generationConfig": {
+          "timeout": 600000,
+          "maxRetries": 1
+        }
+      },
+      {
+        "id": "qwen3-coder-plus",
+        "name": "qwen3-coder-plus (cloud, Dashscope - needs DASHSCOPE_API_KEY)",
+        "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "envKey": "DASHSCOPE_API_KEY"
+      }
+    ]
+  },
+  "security": {
+    "auth": {
+      "selectedType": "openai"
+    }
+  },
+  "model": {
+    "name": "qwen3:4b-agent",
+    "baseUrl": "http://localhost:11434/v1"
+  },
+  "$version": 4
+}
