@@ -1,0 +1,18 @@
+FROM qwen2.5-coder:3b-instruct
+
+# Lighter alternative to qwen3:4b-agent for Qwen Code CLI. Official
+# instruct checkpoint from Qwen's coder line — no hybrid-thinking mode to
+# fight (see qwen3:4b-agent's history: think:false was ignored on that
+# model, forcing a switch to the "instruct" tag as a workaround). This
+# model doesn't have that failure mode to begin with.
+#
+# num_ctx: same 40960 rationale as qwen3:4b-agent — Qwen Code CLI's own
+# system prompt + tool schemas measured 28-34k tokens per turn regardless
+# of which model answers, so any model driven through that CLI needs the
+# same headroom. ~2GB weights vs 2.5GB for qwen3:4b-agent, so resident RAM
+# should land a bit lower too.
+PARAMETER num_ctx 40960
+PARAMETER num_predict 800
+PARAMETER repeat_penalty 1.05
+PARAMETER top_k 20
+PARAMETER top_p 0.8

@@ -8,6 +8,16 @@
   "modelProviders": {
     "openai": [
       {
+        "id": "qwen2.5-coder:3b-agent",
+        "name": "qwen2.5-coder:3b-agent (local, lightest)",
+        "baseUrl": "http://localhost:11434/v1",
+        "envKey": "QWEN_CUSTOM_API_KEY_OPENAI_HTTP_LOCALHOST_11434_V1_76873BDAA9B6",
+        "generationConfig": {
+          "timeout": 600000,
+          "maxRetries": 1
+        }
+      },
+      {
         "id": "qwen3:4b-agent",
         "name": "qwen3:4b-agent (local, fast)",
         "baseUrl": "http://localhost:11434/v1",
