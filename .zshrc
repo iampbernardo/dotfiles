@@ -161,6 +161,40 @@ alias oc-quality='ai-up >/dev/null; opencode -m ollama/qwen3:8b-agent'
 alias oc-think='ai-up >/dev/null; opencode -m ollama/qwen3:8b'
 alias oc-phi='ai-up >/dev/null; opencode -m ollama/phi4-mini'                # lightest reasoning option, ~2.5GB
 
+# --- Local AI (Open WebUI) -------------------------------------------------
+
+# Open WebUI writes its secret key and sqlite db into whatever directory
+# it's launched from, so it gets a dedicated home instead of whatever repo
+# happened to be the cwd (it previously leaked a .webui_secret_key into
+# wordpress-starter).
+webui-up() {
+  mkdir -p ~/local-ai/open-webui
+  if curl -s -o /dev/null http://localhost:3000; then
+    echo "Open WebUI already running."
+    return 0
+  fi
+  (cd ~/local-ai/open-webui && open-webui serve --port 3000 > /tmp/open-webui.log 2>&1 &)
+  for i in $(seq 1 30); do
+    curl -s -o /dev/null http://localhost:3000 && { echo "Open WebUI up at http://localhost:3000"; return 0; }
+    sleep 1
+  done
+  echo "Open WebUI didn't come up — check /tmp/open-webui.log"
+}
+
+webui-down() {
+  pkill -f "open-webui serve" && echo "Open WebUI stopped." || echo "Open WebUI wasn't running."
+}
+
+webui-status() {
+  if curl -s -o /dev/null http://localhost:3000; then
+    echo "Open WebUI: running (http://localhost:3000, data dir: ~/local-ai/open-webui)"
+  else
+    echo "Open WebUI: not running"
+  fi
+}
+
+webui-restart() { webui-down; sleep 1; webui-up; }
+
 # --- Local AI (MLX / Ornith) ----------------------------------------------
 
 # A/B candidate for qwen3:8b-agent's "quality" slot — separate port and
