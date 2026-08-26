@@ -26,16 +26,6 @@
       "models": {
         "ornith-ai/Ornith-1.5-9B-MLX-4bit": { "name": "Ornith 1.5 9B (MLX 4-bit)" }
       }
-    },
-    "colibri": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Colibrì (local)",
-      "options": {
-        "baseURL": "http://127.0.0.1:8000/v1"
-      },
-      "models": {
-        "olmoe-colibri": { "name": "OLMoE 7B (Colibrì)" }
-      }
     }
   }
 }
