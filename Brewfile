@@ -6,6 +6,9 @@
 cask "ghostty"
 cask "font-jetbrains-mono-nerd-font"
 
+# --- System monitoring -------------------------------------------------
+cask "stats"
+
 # --- Shell / prompt ----------------------------------------------------
 brew "stow"
 brew "starship"

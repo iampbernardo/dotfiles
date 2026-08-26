@@ -13,7 +13,8 @@
         "qwen3:4b-agent": { "name": "Qwen3 4B (agent)" },
         "qwen3:4b-instruct": { "name": "Qwen3 4B (base)" },
         "qwen3:8b-agent": { "name": "Qwen3 8B (agent)" },
-        "qwen3:8b": { "name": "Qwen3 8B (base)" }
+        "qwen3:8b": { "name": "Qwen3 8B (base)" },
+        "phi4-mini": { "name": "Phi-4-mini (3.8B)" }
       }
     },
     "mlx": {
@@ -24,6 +25,16 @@
       },
       "models": {
         "ornith-ai/Ornith-1.5-9B-MLX-4bit": { "name": "Ornith 1.5 9B (MLX 4-bit)" }
+      }
+    },
+    "colibri": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Colibrì (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:8000/v1"
+      },
+      "models": {
+        "olmoe-colibri": { "name": "OLMoE 7B (Colibrì)" }
       }
     }
   }

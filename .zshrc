@@ -105,6 +105,12 @@ dotbrew() {
 
 # --- Local AI (Ollama) ---------------------------------------------------
 
+# Quantized KV cache + flash attention: cuts context-window RAM usage on
+# the 16GB M4 with minimal quality loss. Must be set before `ollama serve`
+# starts (ai-up), since the server reads these at launch.
+export OLLAMA_FLASH_ATTENTION=1
+export OLLAMA_KV_CACHE_TYPE=q8_0
+
 # Start Ollama on demand (not a login service — keeps idle RAM free)
 ai-up() {
   if curl -s -o /dev/null http://localhost:11434/api/version; then
@@ -152,6 +158,8 @@ alias qwen-quality-base='ai-up >/dev/null; ollama run qwen3:8b'
 alias oc-coder='ai-up >/dev/null; opencode -m ollama/qwen2.5-coder:3b-agent'
 alias oc-fast='ai-up >/dev/null; opencode -m ollama/qwen3:4b-agent'
 alias oc-quality='ai-up >/dev/null; opencode -m ollama/qwen3:8b-agent'
+alias oc-think='ai-up >/dev/null; opencode -m ollama/qwen3:8b'
+alias oc-phi='ai-up >/dev/null; opencode -m ollama/phi4-mini'                # lightest reasoning option, ~2.5GB
 
 # --- Local AI (MLX / Ornith) ----------------------------------------------
 
@@ -199,3 +207,46 @@ alias ornith='mlx_lm.chat --model ornith-ai/Ornith-1.5-9B-MLX-4bit'
 # opencode via the MLX server. Config: .config/opencode/opencode.json
 # registers this model under the "mlx" provider.
 alias oc-ornith='om-up >/dev/null; opencode -m mlx/ornith-ai/Ornith-1.5-9B-MLX-4bit'
+
+# --- Local AI (Colibrì / OLMoE) -------------------------------------------
+
+# Colibrì's own inference engine (github.com/JustVugg/colibri), C engine +
+# OpenAI-compatible gateway. Only OLMoE 7B fits this machine's 16GB RAM
+# (the bigger families need 24GB+ resident); model lives converted at
+# ~/code/colibri/c/olmoe_merged (~7GB, int8).
+co-up() {
+  if curl -s -o /dev/null http://127.0.0.1:8000/v1/models; then
+    echo "Colibrì already running."
+    return 0
+  fi
+  ~/code/colibri/c/coli serve --model ~/code/colibri/c/olmoe_merged --port 8000 \
+    > /tmp/colibri-server.log 2>&1 &
+  disown
+  for i in $(seq 1 40); do
+    curl -s -o /dev/null http://127.0.0.1:8000/v1/models && { echo "Colibrì up."; return 0; }
+    sleep 0.5
+  done
+  echo "Colibrì didn't come up — check /tmp/colibri-server.log"
+}
+
+co-down() {
+  pkill -f "coli serve" && echo "Colibrì stopped." || echo "Colibrì wasn't running."
+}
+
+co-status() {
+  if curl -s -o /dev/null http://127.0.0.1:8000/v1/models; then
+    echo "Colibrì: running (port 8000)"
+  else
+    echo "Colibrì: not running"
+  fi
+}
+
+co-restart() { co-down; sleep 1; co-up; }
+
+# opencode via Colibrì. Config: .config/opencode/opencode.json registers
+# this model under the "colibri" provider.
+alias oc-olmoe='co-up >/dev/null; opencode -m colibri/olmoe-colibri'
+
+# Stop whichever backend (Ollama and/or MLX and/or Colibrì) is currently up —
+# run this before switching profiles so the old model's RAM is freed first.
+llm-down() { ai-down; om-down; co-down; }

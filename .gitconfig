@@ -20,3 +20,6 @@
 	conflictstyle = diff3
 [diff]
 	colorMoved = default
+[init]
+	defaultBranchName = main
+	defaultBranch = main
