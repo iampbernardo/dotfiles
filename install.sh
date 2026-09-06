@@ -34,29 +34,14 @@ for plugin in zsh-autosuggestions zsh-syntax-highlighting zsh-completions; do
   fi
 done
 
+echo "==> Inicializando configuración de Pi"
+git -C "$DOTFILES_DIR" submodule update --init --recursive
+npm install -g --ignore-scripts @earendil-works/pi-coding-agent@0.85.1
+make -C "$DOTFILES_DIR/my-pi" link
+
 echo "==> Enlazando dotfiles (stow)"
 cd "$DOTFILES_DIR"
 stow .
-
-echo "==> Modelos locales de Ollama (ver ollama/, .zshrc: ai-up/ai-down/ai-status)"
-if command -v ollama &>/dev/null; then
-  ollama serve >/tmp/ollama-install.log 2>&1 &
-  OLLAMA_INSTALL_PID=$!
-  sleep 2
-  ollama pull qwen2.5-coder:3b-instruct
-  ollama pull qwen3:4b-instruct
-  ollama pull qwen3:8b
-  ollama create qwen2.5-coder:3b-agent -f "$DOTFILES_DIR/ollama/Modelfile.qwen2.5-coder-3b-agent"
-  ollama create qwen3:4b-agent -f "$DOTFILES_DIR/ollama/Modelfile.qwen3-4b-agent"
-  ollama create qwen3:8b-agent -f "$DOTFILES_DIR/ollama/Modelfile.qwen3-8b-agent"
-  kill "$OLLAMA_INSTALL_PID"
-fi
-
-echo "==> mlx-lm para Ornith 1.5 9B (ver .zshrc: om-up/om-down/om-status, alias oc-ornith/ornith)"
-if [[ "$(uname -m)" == "arm64" ]]; then
-  uv tool install mlx-lm --quiet
-  # Los pesos (~5GB) se descargan solos en el primer om-up/ornith, no aquí.
-fi
 
 echo "==> Ajustes de macOS (Dock, Finder, teclado, capturas)"
 "$DOTFILES_DIR/macos-defaults.sh"

@@ -1,0 +1,3 @@
+[submodule "my-pi"]
+	path = my-pi
+	url = git@github.com:iampbernardo/my-pi.git

@@ -31,10 +31,8 @@ brew "git"
 brew "gh"
 brew "node"
 
-# --- Local AI (Ollama / opencode, ver .zshrc, ollama/ y .config/opencode/) -
-brew "ollama"
-tap "anomalyco/tap"
-brew "anomalyco/tap/opencode"
+# --- Agentic coding -------------------------------------------------------
+# Pi itself is installed by install.sh with npm at the reviewed pinned version.
 
 # --- Otros -----------------------------------------------------------------
 brew "telnet"

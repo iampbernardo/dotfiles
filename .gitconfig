@@ -1,6 +1,7 @@
 [user]
 	name = Pablo Bernardo
 	email = iam@pbernardo.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIkOBXmhj6S0sCNUyQSydsD8Vu3AwoLjTfBHXByAaDpF
 [credential "https://github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
@@ -23,3 +24,9 @@
 [init]
 	defaultBranchName = main
 	defaultBranch = main
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true

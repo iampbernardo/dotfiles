@@ -1,63 +1,42 @@
 # dotfiles
 
-Mi setup de terminal: Ghostty + Starship + zsh, tema **Tokyo Night Storm**,
-gestionado con [GNU Stow](https://www.gnu.org/software/stow/manual/stow.html).
+Version-controlled macOS terminal and coding-agent setup, installed with GNU Stow. Pi is the configured agentic coding environment; the Epeo/Claude helper remains an optional integration.
 
-## Qué incluye
+## What is tracked
 
-| Archivo | Qué hace |
-|---|---|
-| [`.zshrc`](.zshrc) | oh-my-zsh, plugins (autosuggestions, syntax-highlighting, completions), alias/funciones (`eza`, `bat`, `zoxide`, `fzf`, `lg`=lazygit, `top`=btop), banner `fastfetch`, helpers `dot`/`dotsync`/`dotpush`/`dotbrew`/`dothelp` |
-| [`.gitconfig`](.gitconfig) | credenciales vía `gh`, diffs con `delta` |
-| [`.config/ghostty/config`](.config/ghostty/config) | terminal — tema Tokyo Night Storm, fuente JetBrainsMono Nerd Font |
-| [`.config/starship.toml`](.config/starship.toml) | prompt, mismos colores que Ghostty |
-| [`.config/btop/`](.config/btop) | monitor de sistema (`top`), tema custom |
-| [`.config/lazygit/config.yml`](.config/lazygit/config.yml) | TUI de git (`lg`) |
-| [`.config/fastfetch/config.jsonc`](.config/fastfetch/config.jsonc) | banner de sistema al abrir terminal |
-| [`.config/raycast/TokyoNightStorm.rctheme`](.config/raycast/TokyoNightStorm.rctheme) | tema de Raycast (import manual desde Preferences → Appearance) |
-| [`macos-defaults.sh`](macos-defaults.sh) | Dock, Finder, teclado, capturas — vía `defaults write` |
-| [`scripts/gen_wallpaper.py`](scripts/gen_wallpaper.py) | genera el wallpaper degradado Tokyo Night (sin dependencias) |
-| [`Brewfile`](Brewfile) | todo lo que hay que instalar vía Homebrew |
-| [`install.sh`](install.sh) | bootstrap completo para una Mac nueva |
+- shell, Git, Ghostty, Starship, btop, lazygit, fastfetch, and Raycast configuration;
+- Homebrew bootstrap and macOS defaults;
+- the reviewed [`my-pi`](my-pi) Git submodule, linked safely into `~/.pi/agent/` by its own `make link` command.
 
-## Instalar en una Mac nueva
+Credentials, Pi OAuth/session/package state, Epeo private keys, 1Password state, and application databases are deliberately not tracked.
+
+## Fresh-machine bootstrap
 
 ```bash
-git clone https://github.com/iampbernardo/dotfiles ~/dotfiles
+git clone --recurse-submodules https://github.com/iampbernardo/dotfiles ~/dotfiles
 cd ~/dotfiles
+make check
 ./install.sh
 ```
 
-Esto instala Homebrew (si falta), todo el `Brewfile` (Ghostty, la fuente,
-starship, eza, bat, fzf, zoxide, delta...), `uv`, oh-my-zsh y sus plugins,
-enlaza todo con `stow .`, y aplica `macos-defaults.sh` al final.
+The installer installs the Brewfile, Node, Pi `0.85.1` with npm lifecycle scripts disabled, initializes `my-pi`, links its configuration, installs shell tooling, Stows this repository, and applies macOS defaults. Re-running it is intended to be safe, but review its output before accepting Stow conflicts.
 
-Si algún archivo ya existe en `$HOME` (p. ej. un `.zshrc` por defecto), Stow avisa del conflicto — hay que moverlo o borrarlo antes de correr `stow .` de nuevo.
+After opening a new terminal:
 
-**Después de correrlo, manual:**
-- El tema de Raycast no se aplica solo: `open -a Raycast ~/.config/raycast/TokyoNightStorm.rctheme` y confirmar el import desde la UI de Raycast.
-- El wallpaper no lo pone `install.sh` — `python3 scripts/gen_wallpaper.py` y luego aplicarlo desde Preferencias del Sistema (o `osascript`).
+1. run `pi` and use `/login` to authenticate locally; never commit its generated `auth.json`;
+2. run `/reload` after changing Pi configuration;
+3. optionally install Epeo/1Password separately. Its private key remains under `~/.config/epeo/` and is never copied here.
 
-## Uso diario
-
-Todo esto vive como funciones/alias en el `.zshrc`, ya disponibles en cualquier terminal:
+## Daily use
 
 ```bash
-dot              # cd a ~/dotfiles
-dotsync          # stow . + muestra qué cambió (sin commitear)
-dotpush "msg"    # stow . + commit + push
-dothelp          # chuleta rápida de estos comandos
+make check       # validate tracked JSON, shell syntax, and forbidden paths
+make pi          # initialize/link the Pi submodule
+stow .           # apply this repository's home-directory links
 ```
 
-## Agregar un dotfile nuevo
+The `.zshrc` also provides `dot`, `dotsync`, `dotpush`, `dotbrew`, and `agent` (`pi`). Pi's own documentation, validation, rollback, and safety controls live in the `my-pi` submodule.
 
-1. Mueve el archivo real a `~/dotfiles` manteniendo su ruta relativa a `$HOME`
-   (p. ej. `~/.config/tmux/tmux.conf` → `~/dotfiles/.config/tmux/tmux.conf`)
-2. `dotsync` — crea el symlink de vuelta a `$HOME`
-3. Si el paquete que instalaste no está en `Brewfile`, agrégalo ahí también.
+## Rollback
 
-## Recursos
-
-- [GNU Stow](https://www.gnu.org/software/stow/manual/stow.html)
-- [Ghostty](https://ghostty.org)
-- [Starship](https://starship.rs)
+For normal dotfiles, remove or restore the affected Stow symlink and run `stow .` after fixing the tracked file. For Pi, use the timestamped backups created by `my-pi`'s `make link`; see `my-pi/docs/operations.md`.

@@ -5,3 +5,7 @@
 ^/install\.sh$
 ^/macos-defaults\.sh$
 ^/scripts$
+^/my-pi$
+^/\.github$
+^/AGENTS\.md$
+^/Makefile$

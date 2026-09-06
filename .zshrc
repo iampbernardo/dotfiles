@@ -103,145 +103,20 @@ dotbrew() {
   (cd ~/dotfiles && git diff Brewfile)
 }
 
-# --- Local AI (Ollama) ---------------------------------------------------
+# --- Pi (primary agentic coding environment) ---------------------------
 
-# Quantized KV cache + flash attention: cuts context-window RAM usage on
-# the 16GB M4 with minimal quality loss. Must be set before `ollama serve`
-# starts (ai-up), since the server reads these at launch.
-export OLLAMA_FLASH_ATTENTION=1
-export OLLAMA_KV_CACHE_TYPE=q8_0
+# `pi` is installed by install.sh and uses the reviewed configuration from
+# the my-pi submodule. Credentials remain local and are configured with /login.
+agent() { pi "$@"; }
 
-# Start Ollama on demand (not a login service — keeps idle RAM free)
-ai-up() {
-  if curl -s -o /dev/null http://localhost:11434/api/version; then
-    echo "Ollama already running."
-    return 0
-  fi
-  ollama serve > /tmp/ollama-serve.log 2>&1 &
-  disown
-  for i in $(seq 1 20); do
-    curl -s -o /dev/null http://localhost:11434/api/version && { echo "Ollama up."; return 0; }
-    sleep 0.5
-  done
-  echo "Ollama didn't come up — check /tmp/ollama-serve.log"
+# --- Epeo (scoped GitHub App token for Claude) ----------------------------
+
+# Runs `claude` with GH_TOKEN/GITHUB_TOKEN set to a freshly minted
+# installation token from the Epeo GitHub App, instead of a long-lived PAT.
+# github-token.py mints the token on demand (~/.config/epeo/epeo.pem).
+epeo() {
+    PATH="$HOME/.config/epeo/bin:$PATH" claude "$@"
 }
 
-ai-down() {
-  pkill -f "ollama serve" && echo "Ollama stopped." || echo "Ollama wasn't running."
-}
-
-ai-status() {
-  if curl -s -o /dev/null http://localhost:11434/api/version; then
-    echo "Ollama: running"
-    ollama ps
-  else
-    echo "Ollama: not running"
-  fi
-}
-
-ai-restart() { ai-down; sleep 1; ai-up; }
-
-# Local model shortcuts (Qwen Code and Aider were removed; these just
-# start Ollama and drop you into `ollama run` directly).
-# "-base" = stock pulled checkpoint. Plain name = the tuned "-agent"
-# Modelfile variant (40960 ctx, sampling tweaks — see ollama/Modelfile.*).
-alias qwen-coder='ai-up >/dev/null; ollama run qwen2.5-coder:3b-agent'      # coder line, lightest (~2GB)
-alias qwen-coder-base='ai-up >/dev/null; ollama run qwen2.5-coder:3b-instruct'
-alias qwen-fast='ai-up >/dev/null; ollama run qwen3:4b-agent'              # general Qwen3, ~2.5GB
-alias qwen-fast-base='ai-up >/dev/null; ollama run qwen3:4b-instruct'
-alias qwen-quality='ai-up >/dev/null; ollama run qwen3:8b-agent'           # general Qwen3, ~5.2GB
-alias qwen-quality-base='ai-up >/dev/null; ollama run qwen3:8b'
-
-# opencode — agent CLI with a real TUI + tool-calling, multi-provider.
-# Config: .config/opencode/opencode.json registers the same 6 Ollama
-# models above under the "ollama" provider (no API key needed locally).
-alias oc-coder='ai-up >/dev/null; opencode -m ollama/qwen2.5-coder:3b-agent'
-alias oc-fast='ai-up >/dev/null; opencode -m ollama/qwen3:4b-agent'
-alias oc-quality='ai-up >/dev/null; opencode -m ollama/qwen3:8b-agent'
-alias oc-think='ai-up >/dev/null; opencode -m ollama/qwen3:8b'
-alias oc-phi='ai-up >/dev/null; opencode -m ollama/phi4-mini'                # lightest reasoning option, ~2.5GB
-
-# --- Local AI (Open WebUI) -------------------------------------------------
-
-# Open WebUI writes its secret key and sqlite db into whatever directory
-# it's launched from, so it gets a dedicated home instead of whatever repo
-# happened to be the cwd (it previously leaked a .webui_secret_key into
-# wordpress-starter).
-webui-up() {
-  mkdir -p ~/local-ai/open-webui
-  if curl -s -o /dev/null http://localhost:3000; then
-    echo "Open WebUI already running."
-    return 0
-  fi
-  (cd ~/local-ai/open-webui && open-webui serve --port 3000 > /tmp/open-webui.log 2>&1 &)
-  for i in $(seq 1 30); do
-    curl -s -o /dev/null http://localhost:3000 && { echo "Open WebUI up at http://localhost:3000"; return 0; }
-    sleep 1
-  done
-  echo "Open WebUI didn't come up — check /tmp/open-webui.log"
-}
-
-webui-down() {
-  pkill -f "open-webui serve" && echo "Open WebUI stopped." || echo "Open WebUI wasn't running."
-}
-
-webui-status() {
-  if curl -s -o /dev/null http://localhost:3000; then
-    echo "Open WebUI: running (http://localhost:3000, data dir: ~/local-ai/open-webui)"
-  else
-    echo "Open WebUI: not running"
-  fi
-}
-
-webui-restart() { webui-down; sleep 1; webui-up; }
-
-# --- Local AI (MLX / Ornith) ----------------------------------------------
-
-# A/B candidate for qwen3:8b-agent's "quality" slot — separate port and
-# backend (Apple's MLX instead of Ollama/llama.cpp) so it doesn't disturb
-# anything above until it's proven out the same way Qwen3 was.
-om-up() {
-  if curl -s -o /dev/null http://127.0.0.1:8080/v1/models; then
-    echo "MLX server already running."
-    return 0
-  fi
-  mlx_lm.server \
-    --model ornith-ai/Ornith-1.5-9B-MLX-4bit \
-    --host 127.0.0.1 \
-    --port 8080 \
-    --prefill-step-size 1024 \
-    > /tmp/mlx-server.log 2>&1 &
-  disown
-  # First run also downloads the ~5GB weights, so give it more room than
-  # ai-up's Ollama wait before giving up.
-  for i in $(seq 1 60); do
-    curl -s -o /dev/null http://127.0.0.1:8080/v1/models && { echo "MLX server up."; return 0; }
-    sleep 1
-  done
-  echo "MLX server didn't come up — check /tmp/mlx-server.log"
-}
-
-om-down() {
-  pkill -f "mlx_lm.server" && echo "MLX server stopped." || echo "MLX server wasn't running."
-}
-
-om-status() {
-  if curl -s -o /dev/null http://127.0.0.1:8080/v1/models; then
-    echo "MLX server: running (port 8080)"
-  else
-    echo "MLX server: not running"
-  fi
-}
-
-om-restart() { om-down; sleep 1; om-up; }
-
-# Direct chat, no server — for quick A/B testing against qwen-quality.
-alias ornith='mlx_lm.chat --model ornith-ai/Ornith-1.5-9B-MLX-4bit'
-
-# opencode via the MLX server. Config: .config/opencode/opencode.json
-# registers this model under the "mlx" provider.
-alias oc-ornith='om-up >/dev/null; opencode -m mlx/ornith-ai/Ornith-1.5-9B-MLX-4bit'
-
-# Stop whichever backend (Ollama and/or MLX) is currently up — run this
-# before switching profiles so the old model's RAM is freed first.
-llm-down() { ai-down; om-down; }
+# Added by cua-driver-rs installer — see https://github.com/trycua/cua
+export PATH="/Users/pbernardo/.local/bin:$PATH"
