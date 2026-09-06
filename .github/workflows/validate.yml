@@ -8,7 +8,8 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+      # Keep CI credential-free: my-pi is a private runtime submodule and
+      # is validated in its own repository. This repository's checks do not
+      # need to clone it.
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
       - run: make check
