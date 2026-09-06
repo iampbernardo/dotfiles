@@ -9,3 +9,5 @@
 ^/\.github$
 ^/AGENTS\.md$
 ^/Makefile$
+^/\.DS_Store$
+^/\.config/\.DS_Store$
