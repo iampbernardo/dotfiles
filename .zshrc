@@ -28,7 +28,7 @@ alias la='eza -la --icons --group-directories-first'
 alias lt='eza --tree --icons --level=2'
 
 # bat (better cat)
-export BAT_THEME="Nord"
+export BAT_THEME="ansi"
 alias cat='bat --paging=never --style=plain'
 
 # fzf (fuzzy finder) key bindings + completion
@@ -46,10 +46,16 @@ alias top='btop'
 # Starship prompt
 eval "$(starship init zsh)"
 
-# fastfetch — banner de sistema al abrir una terminal nueva
-if [[ -o interactive ]] && command -v fastfetch &>/dev/null; then
-  fastfetch
+# NOSTROMO / command deck. Full telemetry stays on demand.
+alias hud='fastfetch'
+if [[ -r "$HOME/.config/ghostty/hud.zsh" ]]; then
+  source "$HOME/.config/ghostty/hud.zsh"
+  [[ -o interactive ]] && nostromo_boot
 fi
+
+# Match suggestions and fuzzy search to the terminal's amber/cyan palette.
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--color=bg:-1,bg+:#1b2b30,fg:#ddd3b8,fg+:#f5edda,hl:#e9ae55,hl+:#ffd58a,prompt:#e9ae55,pointer:#78c7c4,marker:#78c7c4,info:#71858a,spinner:#e9ae55,header:#78c7c4,border:#71858a"
 
 # --- Dotfiles (GNU Stow) -------------------------------------------------
 

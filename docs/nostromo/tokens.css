@@ -1,0 +1,38 @@
+/* NOSTROMO MK.II — portable tokens; see DESIGN.md for roles. */
+:root {
+  --nostromo-background: #0b1012;
+  --nostromo-surface: #131d21;
+  --nostromo-surface-active: #1b2b30;
+  --nostromo-selection: #30494c;
+  --nostromo-rail: #263d43;
+  --nostromo-border: #526970;
+  --nostromo-muted: #71858a;
+  --nostromo-foreground: #ddd3b8;
+  --nostromo-foreground-bright: #f5edda;
+  --nostromo-amber: #e9ae55;
+  --nostromo-amber-bright: #ffd58a;
+  --nostromo-cyan: #78c7c4;
+  --nostromo-cyan-bright: #a2e5df;
+  --nostromo-success: #9fbc85;
+  --nostromo-danger: #f07167;
+  --nostromo-danger-bright: #ff9385;
+  --nostromo-blue: #719fae;
+  --nostromo-violet: #b69ac7;
+  --nostromo-ansi-0: #131d21;
+  --nostromo-ansi-1: #f07167;
+  --nostromo-ansi-2: #9fbc85;
+  --nostromo-ansi-3: #e9ae55;
+  --nostromo-ansi-4: #719fae;
+  --nostromo-ansi-5: #b69ac7;
+  --nostromo-ansi-6: #78c7c4;
+  --nostromo-ansi-7: #ddd3b8;
+  --nostromo-ansi-8: #71858a;
+  --nostromo-ansi-9: #ff9385;
+  --nostromo-ansi-10: #bed69b;
+  --nostromo-ansi-11: #ffd58a;
+  --nostromo-ansi-12: #9cc5d3;
+  --nostromo-ansi-13: #d1b3e0;
+  --nostromo-ansi-14: #a2e5df;
+  --nostromo-ansi-15: #f5edda;
+  --nostromo-font-mono: "JetBrainsMono Nerd Font Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}

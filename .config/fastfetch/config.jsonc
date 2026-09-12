@@ -1,33 +1,65 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "type": "auto",
+    "type": "data",
+    "source": "$2          .     +     .\n$1             /\\\n$1        ____/==\\____\n$1       /___/ || \\___\\\n$2      /___/--++--\\___\\\n$2     /___/   ||   \\___\\\n$1         \\___||___/\n$1           /_||_\\\n$2         .   ||   .\n$2      .      ++      .\n\n$1      N O S T R O M O\n$2      SYSTEM TELEMETRY\n$2      \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
     "color": {
-      "1": "blue",
-      "2": "magenta"
+      "1": "yellow",
+      "2": "cyan"
+    },
+    "padding": {
+      "right": 4
     }
   },
   "display": {
     "color": {
-      "keys": "blue",
-      "title": "magenta"
+      "keys": "cyan",
+      "title": "yellow"
     },
-    "separator": "  "
+    "separator": "  \u203a  "
   },
   "modules": [
-    "title",
+    {
+      "type": "title"
+    },
     "separator",
-    "os",
-    "host",
-    "kernel",
-    "uptime",
-    "packages",
-    "shell",
-    "terminal",
-    "cpu",
-    "gpu",
-    "memory",
-    "disk",
+    {
+      "type": "os",
+      "key": "OS    / CORE"
+    },
+    {
+      "type": "host",
+      "key": "HULL  / HOST"
+    },
+    {
+      "type": "uptime",
+      "key": "UP    / TIME"
+    },
+    {
+      "type": "terminal",
+      "key": "TTY   / LINK"
+    },
+    {
+      "type": "shell",
+      "key": "SH    / EXEC"
+    },
+    "break",
+    {
+      "type": "cpu",
+      "key": "CPU   / ARRAY"
+    },
+    {
+      "type": "gpu",
+      "key": "GPU   / ARRAY"
+    },
+    {
+      "type": "memory",
+      "key": "RAM   / LOAD"
+    },
+    {
+      "type": "disk",
+      "key": "DISK  / LOAD"
+    },
     "break",
     "colors"
   ]

@@ -1,32 +1,45 @@
-# Theme
-theme = TokyoNight Storm
+# NOSTROMO / amber-phosphor flight console
+# Explicit palette keeps the appearance independent of bundled theme names.
+background = #0b1012
+foreground = #ddd3b8
+palette = 0=#131d21
+palette = 1=#f07167
+palette = 2=#9fbc85
+palette = 3=#e9ae55
+palette = 4=#719fae
+palette = 5=#b69ac7
+palette = 6=#78c7c4
+palette = 7=#ddd3b8
+palette = 8=#71858a
+palette = 9=#ff9385
+palette = 10=#bed69b
+palette = 11=#ffd58a
+palette = 12=#9cc5d3
+palette = 13=#d1b3e0
+palette = 14=#a2e5df
+palette = 15=#f5edda
+selection-background = #30494c
+selection-foreground = #f5edda
+cursor-color = #e9ae55
+cursor-text = #0b1012
 
-# Font
-font-family = "JetBrainsMono Nerd Font"
+# Installed, fixed-width font; comfortable for code and terminal interfaces.
+font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 14
-adjust-cell-height = 15%
+adjust-cell-height = 10%
 
-# Window
-window-padding-x = 14
-window-padding-y = 10
+window-padding-x = 20
+window-padding-y = 14
 window-decoration = true
 macos-titlebar-style = tabs
-background-opacity = 0.94
-background-blur = 20
-unfocused-split-opacity = 0.7
+background-opacity = 1
+unfocused-split-opacity = 0.85
 
-# Cursor
 cursor-style = block
 cursor-style-blink = true
-
-# Behavior
 copy-on-select = true
 confirm-close-surface = false
 shell-integration-features = no-cursor
-
-# Scrollback
 scrollback-limit = 10000000
-
-# macOS
 macos-option-as-alt = false
 quick-terminal-position = top

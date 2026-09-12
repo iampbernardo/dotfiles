@@ -40,3 +40,19 @@ The `.zshrc` also provides `dot`, `dotsync`, `dotpush`, `dotbrew`, and `agent` (
 ## Rollback
 
 For normal dotfiles, remove or restore the affected Stow symlink and run `stow .` after fixing the tracked file. For Pi, use the timestamped backups created by `my-pi`'s `make link`; see `my-pi/docs/operations.md`.
+
+
+## NOSTROMO MK.II
+
+A retro spacecraft command console shared across Ghostty, the shell prompt, fuzzy
+search, Git, and system telemetry. Near-black surfaces, amber controls, cyan
+navigation, a compact command deck, and real status information.
+
+- [Setup and daily controls](docs/nostromo/SETUP.md)
+- [Inspiration, palette, typography, and reuse rules](docs/nostromo/DESIGN.md)
+- [Portable JSON tokens](docs/nostromo/tokens.json) and [CSS variables](docs/nostromo/tokens.css)
+
+Reload Ghostty with Command–Shift–comma and open a new tab. Try `hud` for a system
+snapshot, `lg` for Git, and `top` for live telemetry. Existing Stow links pick up
+source changes. The documentation and design exports stay in the repository;
+`.stow-local-ignore` excludes `docs/` from home-directory linking.

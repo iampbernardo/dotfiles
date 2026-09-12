@@ -11,3 +11,4 @@
 ^/Makefile$
 ^/\.DS_Store$
 ^/\.config/\.DS_Store$
+^/docs$

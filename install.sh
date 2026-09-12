@@ -41,6 +41,7 @@ make -C "$DOTFILES_DIR/my-pi" link
 
 echo "==> Enlazando dotfiles (stow)"
 cd "$DOTFILES_DIR"
+# .stow-local-ignore keeps docs/ and its design exports in this repository.
 stow .
 
 echo "==> Ajustes de macOS (Dock, Finder, teclado, capturas)"

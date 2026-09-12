@@ -1,96 +1,87 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# NOSTROMO / two-line command console. No background jobs or network lookups.
+add_newline = true
+palette = 'nostromo'
 format = """
-[](#7aa2f7)\
-$os\
-$username\
-[](bg:#bb9af7 fg:#7aa2f7)\
-$directory\
-[](fg:#bb9af7 bg:#9ece6a)\
-$git_branch\
-$git_status\
-[](fg:#9ece6a bg:#1a1b26)\
-$fill\
-[](fg:#1a1b26 bg:#e0af68)\
-$nodejs\
-$python\
-$rust\
-$golang\
-[](fg:#e0af68 bg:#f7768e)\
-$cmd_duration\
-[](fg:#f7768e)\
-"""
+[┌─](muted) $hostname$directory$git_branch$git_commit$git_status$git_state$cmd_duration$jobs$status$fill$time
+[└─](muted) $character"""
 
-palette = 'tokyonight'
+[palettes.nostromo]
+amber = '#e9ae55'
+cyan = '#78c7c4'
+muted = '#71858a'
+red = '#f07167'
 
-[palettes.tokyonight]
-bg0     = '#1a1b26'
-blue    = '#7aa2f7'
-purple  = '#bb9af7'
-green   = '#9ece6a'
-yellow  = '#e0af68'
-red     = '#f7768e'
-cyan    = '#7dcfff'
-fg      = '#c0caf5'
-
-[fill]
-symbol = ' '
-
-[os]
-disabled = false
-style = "bg:#7aa2f7 fg:#1a1b26"
-
-[os.symbols]
-Macos = "󰀵"
-
-[username]
-show_always = true
-style_user = "bg:#7aa2f7 fg:#1a1b26"
-style_root = "bg:#7aa2f7 fg:#1a1b26"
-format = '[ $user ]($style)'
-disabled = false
+[hostname]
+ssh_only = false
+ssh_symbol = 'SSH '
+style = 'bold amber'
+format = '[\[$ssh_symbol$hostname\]]($style) [//](muted) '
 
 [directory]
-style = "bg:#bb9af7 fg:#1a1b26"
-format = "[ $path ]($style)"
+style = 'bold cyan'
+format = '[$path]($style)[$read_only](red) '
 truncation_length = 3
-truncation_symbol = "…/"
+truncate_to_repo = true
+truncation_symbol = '…/'
+read_only = ' RO'
 
 [git_branch]
-symbol = ""
-style = "bg:#9ece6a fg:#1a1b26"
-format = '[ $symbol $branch ]($style)'
+style = 'amber'
+format = '[::](muted) [$branch]($style) '
+truncation_length = 28
+
+[git_commit]
+only_detached = true
+style = 'amber'
+format = '[DETACHED $hash]($style) '
 
 [git_status]
-style = "bg:#9ece6a fg:#1a1b26"
-format = '[$all_status$ahead_behind ]($style)'
+style = 'amber'
+format = '([$all_status$ahead_behind]($style) )'
+conflicted = 'CONFLICT '
+ahead = '↑$count '
+behind = '↓$count '
+diverged = '↑$ahead_count↓$behind_count '
+untracked = '?$count '
+stashed = '≡$count '
+modified = '~$count '
+staged = '+$count '
+renamed = '»$count '
+deleted = '-$count '
 
-[nodejs]
-symbol = ""
-style = "bg:#e0af68 fg:#1a1b26"
-format = '[ $symbol ($version) ]($style)'
-
-[python]
-symbol = ""
-style = "bg:#e0af68 fg:#1a1b26"
-format = '[ $symbol ($version) ]($style)'
-
-[rust]
-symbol = ""
-style = "bg:#e0af68 fg:#1a1b26"
-format = '[ $symbol ($version) ]($style)'
-
-[golang]
-symbol = ""
-style = "bg:#e0af68 fg:#1a1b26"
-format = '[ $symbol ($version) ]($style)'
+[git_state]
+style = 'bold red'
+format = '[$state( $progress_current/$progress_total)]($style) '
 
 [cmd_duration]
 min_time = 2000
-style = "bg:#f7768e fg:#1a1b26"
-format = '[ 󰔟 $duration ]($style)'
+style = 'muted'
+format = '[T+$duration]($style) '
+
+[jobs]
+style = 'cyan'
+format = '[JOBS:$number]($style) '
+number_threshold = 1
+symbol_threshold = 1
+
+[status]
+disabled = false
+style = 'bold red'
+format = '[EXIT:$status]($style) '
 
 [character]
-success_symbol = "[❯](bold #9ece6a)"
-error_symbol = "[❯](bold #f7768e)"
-vimcmd_symbol = "[❮](bold #7aa2f7)"
+success_symbol = '[▶](bold amber)'
+error_symbol = '[▶](bold red)'
+vimcmd_symbol = '[◀](bold cyan)'
+
+# Rail and local timestamp mark when each command prompt was drawn.
+[fill]
+symbol = '─'
+style = '#263d43'
+
+[time]
+disabled = false
+time_format = '%H:%M'
+format = '[─](muted)[ $time ](cyan)'
