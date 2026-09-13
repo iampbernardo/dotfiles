@@ -3,6 +3,11 @@
 # Uso: ./install.sh
 set -euo pipefail
 
+if [[ "$(uname -s)" != Darwin ]]; then
+  echo "This bootstrap is for macOS. On Ubuntu, use: python3 scripts/ubuntu/install.py" >&2
+  exit 1
+fi
+
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "==> Homebrew"

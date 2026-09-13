@@ -56,3 +56,16 @@ Reload Ghostty with Command–Shift–comma and open a new tab. Try `hud` for a 
 snapshot, `lg` for Git, and `top` for live telemetry. Existing Stow links pick up
 source changes. The documentation and design exports stay in the repository;
 `.stow-local-ignore` excludes `docs/` from home-directory linking.
+
+## Ubuntu terminal
+
+Use the same repository for the remote NOSTROMO prompt and themes. The Ubuntu
+adapter keeps Bash, installs pinned Linux tools under `~/.local/bin`, and links
+shared configuration into this checkout. It does not run the Mac bootstrap or
+initialize the Pi submodule. See [Ubuntu setup and rollback](docs/nostromo/UBUNTU.md).
+
+```sh
+git clone --no-recurse-submodules https://github.com/iampbernardo/dotfiles ~/dotfiles
+cd ~/dotfiles
+python3 scripts/ubuntu/install.py
+```

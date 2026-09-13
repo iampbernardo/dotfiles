@@ -129,3 +129,9 @@ Reconsider with one real project: compare opening the project, editing a command
 resuming an agent session, inspecting a diff, and SSH work. Judge completion effort
 and friction, not appearance alone. The NOSTROMO tokens can be ported if Warp wins;
 this theme is not a reason to lock the user into Ghostty.
+
+## Ubuntu / Ithaka
+
+The remote deployment uses this same repository with a small Bash adapter.
+Follow [UBUNTU.md](UBUNTU.md) for installation, verification, and rollback.
+Run the Ubuntu installer there; do not Stow the Mac `.zshrc` onto Linux.

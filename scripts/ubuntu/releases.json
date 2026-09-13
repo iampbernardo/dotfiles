@@ -1,0 +1,56 @@
+[
+  {
+    "tool": "starship",
+    "version": "v1.26.0",
+    "url": "https://github.com/starship/starship/releases/download/v1.26.0/starship-x86_64-unknown-linux-musl.tar.gz",
+    "sha256": "b7c232b0e8249d8e55a40beb79c5c43a7d370f3f9408bd215deb0170daeaadf3"
+  },
+  {
+    "tool": "fastfetch",
+    "version": "2.68.1",
+    "url": "https://github.com/fastfetch-cli/fastfetch/releases/download/2.68.1/fastfetch-linux-amd64.tar.gz",
+    "sha256": "0c51ef6fa3e976eb5038fe0afda38629d3ca07947740bb0e3354c7c4f1238c0c"
+  },
+  {
+    "tool": "btop",
+    "version": "v1.4.7",
+    "url": "https://github.com/aristocratos/btop/releases/download/v1.4.7/btop-x86_64-unknown-linux-musl.tar.gz",
+    "sha256": "5099054dd6a101bd12eb6ff3702a9a6a3f57aaa27923a0da478ae5b517faf335"
+  },
+  {
+    "tool": "lazygit",
+    "version": "v0.65.0",
+    "url": "https://github.com/jesseduffield/lazygit/releases/download/v0.65.0/lazygit_0.65.0_linux_x86_64.tar.gz",
+    "sha256": "44d8e7dd1484b4a66e191bd4ab25a71e8b4b3a65ab122f838e65677ef58c5506"
+  },
+  {
+    "tool": "fzf",
+    "version": "v0.74.4",
+    "url": "https://github.com/junegunn/fzf/releases/download/v0.74.4/fzf-0.74.4-linux_amd64.tar.gz",
+    "sha256": "05e6813a337cc722c3ed07e54a764b75cc5d671e2e60459db0ba696ee5fa7504"
+  },
+  {
+    "tool": "zoxide",
+    "version": "v0.10.0",
+    "url": "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-x86_64-unknown-linux-musl.tar.gz",
+    "sha256": "2d93385b99f3e82cf2701609a1bffcad863fbeb75aa3fe7eb6be4d29be68b1ae"
+  },
+  {
+    "tool": "bat",
+    "version": "v0.26.1",
+    "url": "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat-v0.26.1-x86_64-unknown-linux-musl.tar.gz",
+    "sha256": "0dcd8ac79732c0d5b136f11f4ee00e581440e16a44eab5b3105b611bbf2cf191"
+  },
+  {
+    "tool": "eza",
+    "version": "v0.23.5",
+    "url": "https://github.com/eza-community/eza/releases/download/v0.23.5/eza_x86_64-unknown-linux-musl.tar.gz",
+    "sha256": "e06eebab74b73d6b7d51a796a353824b001bea82df077706382e100815d28904"
+  },
+  {
+    "tool": "delta",
+    "version": "0.19.2",
+    "url": "https://github.com/dandavison/delta/releases/download/0.19.2/delta-0.19.2-x86_64-unknown-linux-musl.tar.gz",
+    "sha256": "f1ea01ca7728ce3462debc359f39dfc7cbbc1a63224b71fefabf92042864aa1b"
+  }
+]
