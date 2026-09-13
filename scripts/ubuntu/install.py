@@ -50,7 +50,7 @@ def fetch(item):
         data = response.read()
     assert hashlib.sha256(data).hexdigest() == item['sha256'], 'Checksum mismatch: ' + item['tool']
     with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as archive:
-        matches = [m for m in archive.getmembers() if m.isfile() and Path(m.name).name == item['tool']]
+        matches = [m for m in archive.getmembers() if m.isfile() and (m.mode & 0o111) and Path(m.name).name == item['tool']]
         assert len(matches) == 1, 'Ambiguous binary: ' + item['tool']
         binary = archive.extractfile(matches[0]).read()
     print('Verified ' + item['tool'] + ' ' + item['version'], flush=True)

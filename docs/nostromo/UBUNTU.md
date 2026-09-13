@@ -39,7 +39,7 @@ python3 scripts/ubuntu/install.py
 ```
 
 The installer downloads official release archives listed in `releases.json`, checks
-their SHA-256 digests, extracts only the selected executable, and installs it under
+their SHA-256 digests, extracts only the matching file marked executable (excluding shell-completion files), and installs it under
 `~/.local/bin`. It verifies all archives before touching existing shell configuration.
 Starship, Fastfetch, btop, lazygit, fzf, zoxide, bat, eza, and delta are included.
 Versions and official download URLs are pinned in the manifest. No curl-to-shell
